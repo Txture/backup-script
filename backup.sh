@@ -33,6 +33,12 @@ do
     if [ $i == 10 ]
     then
         echo "Maintenance did not start after 100 seconds. Aborting backup."
+        # Disable maintenance mode
+        echo "Deactivating maintenance mode..."
+        curl -X PUT -s\
+          $TXTURE_URL'/api/v11/maintenance-mode/disable' \
+          -H 'authorization: Bearer '$API_TOKEN \
+          -H 'cache-control: no-cache' > /dev/null
         exit 1
     fi
     sleep 10
